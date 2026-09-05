@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --pixel-font: "Press Start 2P", "Courier New", monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #0a0508;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pixel-font {
+  font-family: var(--pixel-font);
+}
+
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.blink {
+  animation: flicker 1s steps(2, end) infinite;
+}
+
+@keyframes slam {
+  0% { transform: scale(2.4); opacity: 0; }
+  60% { transform: scale(0.95); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.slam-in {
+  animation: slam 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@keyframes fadeUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.fade-up {
+  animation: fadeUp 0.35s ease-out both;
+}
+
+.touch-btn {
+  touch-action: none;
+  transition: transform 60ms ease, background-color 60ms ease;
+}
+.touch-btn:active,
+.touch-btn.pressed {
+  transform: scale(0.92);
+}
